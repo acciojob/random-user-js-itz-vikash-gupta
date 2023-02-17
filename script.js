@@ -1,6 +1,6 @@
 //your code here
 const person = document.getElementById("person");
-const btn = document.getElementById("btn");
+const btn = document.getElementById("getUser");
 
 
 btn.addEventListener("click", getAnotherUser);
