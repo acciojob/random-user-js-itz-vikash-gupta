@@ -2,6 +2,7 @@
 const person = document.getElementById("person");
 const btn = document.getElementById("btn");
 
+
 btn.addEventListener("click", getAnotherUser);
 
 async function fetchData() {
@@ -26,10 +27,7 @@ async function renderData() {
     <p id="age" style='display: none'>${personData.dob.age}</p>
     <p id="email" style='display:none'>${personData.email}</p>
     <p id="phone" style='display:none'>${personData.phone}</p>
-    <button onClick="showAge()">Age</button>
-    <button onClick="showEmail()">Email</button>
-    <button onClick="showPhone()">Phone</button>
-    <button id="btn">GET NEW USER</button>
+   
   `;
 }
 
