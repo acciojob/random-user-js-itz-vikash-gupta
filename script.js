@@ -1,34 +1,50 @@
 //your code here
-let user = null;
+const person = document.getElementById("person");
+const btn = document.getElementById("btn");
 
-    async function getUser() {
-      const response = await fetch('https://randomuser.me/api/');
-      const data = await response.json();
-      user = data.results[0];
-      displayUserInfo(user);
-    }
+btn.addEventListener("click", getAnotherUser);
 
-    function displayUserInfo(user) {
-      document.getElementById('additional-info').innerHTML = '';
-      const attr = document.querySelector('button.active').dataset.attr;
-      if (attr === 'age') {
-        document.getElementById('additional-info').innerHTML = user.dob.age;
-      } else if (attr === 'email') {
-        document.getElementById('additional-info').innerHTML = user.email;
-      } else if (attr === 'phone') {
-        document.getElementById('additional-info').innerHTML = user.phone;
-      }
-    }
-    document.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', () => {
-          document.querySelectorAll('button').forEach(button => button.classList.remove('active'));
-          button.classList.add('active');
-          if (user) {
-            displayUserInfo(user);
-          }
-        });
-      });
-  
-      document.getElementById('getUser').addEventListener('click', () => {
-        getUser();
-      });
+async function fetchData() {
+  const url = "https://randomuser.me/api/";
+  const res = await fetch(url, {
+    method: "get",
+  });
+  const data = await res.json();
+  return data;
+}
+
+async function renderData() {
+  const data = await fetchData();
+  const personData = data.results[0];
+  console.log(personData);
+  const full_name = personData.name.first + " " + personData.name.last;
+  const imgSrc = personData.picture.large;
+
+  person.innerHTML = `
+    <img src=${imgSrc} />
+    <h2>${full_name}</h2>
+    <p id="age" style='display: none'>${personData.dob.age}</p>
+    <p id="email" style='display:none'>${personData.email}</p>
+    <p id="phone" style='display:none'>${personData.phone}</p>
+    <button onClick="showAge()">Age</button>
+    <button onClick="showEmail()">Email</button>
+    <button onClick="showPhone()">Phone</button>
+    <button id="btn">GET NEW USER</button>
+  `;
+}
+
+function getAnotherUser() {
+  renderData();
+}
+
+function showAge() {
+  document.getElementById("age").style.display = "block";
+}
+function showEmail(){
+    document.getElementById("email").style.display="block";
+}
+function showPhone(){
+    document.getElementById("phone").style.display="block";
+}
+
+renderData();
